@@ -1,11 +1,23 @@
-<p>
-  card-component works!
-</p>
-<div class="card main-card">
-  <div class="card-body">
-    <h5 class="card-title">Bandwidth</h5>
-    <p class="card-subtitle text-muted">Last Updated 24h ago</p>
-    <app-bar-chart></app-bar-chart>
-    
+<div class="card-group">
+  <div class="card main-card">
+    <div class="card-body">
+      <h5 class="card-title">Bandwidth</h5>
+      <p class="card-subtitle text-muted">Last Updated 24h ago</p>
+      <app-bar-chart [chartData]='bandwidthData'></app-bar-chart>
+    </div>
+  </div>
+  <div class="card main-card">
+    <div class="card-body">
+      <h5 class="card-title">CPU Usage</h5>
+      <p class="card-subtitle text-muted">Last Updated 24h ago</p>
+      <app-bar-chart [chartData]='cpuData'></app-bar-chart>
+    </div>
+  </div>
+  <div class="card main-card">
+    <div class="card-body">
+      <h5 class="card-title">Memory Usage</h5>
+      <p class="card-subtitle text-muted">Last Updated 24h ago</p>
+      <app-bar-chart [chartData]='memoryData'></app-bar-chart>
+    </div>
   </div>
 </div>

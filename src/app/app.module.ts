@@ -5,8 +5,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CardComponentComponent } from './card-component/card-component.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { D3Service } from 'd3-ng2-service';
-
 
 @NgModule({
   declarations: [
@@ -17,7 +15,7 @@ import { D3Service } from 'd3-ng2-service';
   imports: [
     BrowserModule
   ],
-  providers: [D3Service],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
