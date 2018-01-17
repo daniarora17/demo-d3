@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Chart } from '../chart';
 
 import * as d3 from 'd3-selection';
@@ -12,8 +12,9 @@ import * as d3Axis from 'd3-axis';
   styleUrls: ['./bar-chart.component.less']
 })
 
-export class BarChartComponent implements OnInit {
+export class BarChartComponent implements OnInit, AfterViewInit {
   @Input() chartData: Chart;
+  @Input() ngClass;
   private width: number;
   private height: number;
   private margin = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -28,22 +29,21 @@ export class BarChartComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.chartData;
+  }
+
+  ngAfterViewInit() {
     this.initSvg();
     this.initAxis();
     this.drawAxis();
     this.drawBars();
-    // this.getChartClass();
   }
 
   private initSvg() {
-    this.svg = d3.select('svg');
-    console.log(this.svg, 'get svg element>>>');
+    const svgClass = 'svg.' + this.ngClass;
+    this.svg = d3.select(svgClass);
     this.width = +this.svg.attr('width') - this.margin.left - this.margin.right;
-    console.log(this.width, 'this.width>>>>>');
     this.height = +this.svg.attr('height') - this.margin.top - this.margin.bottom;
-    console.log(this.height, 'heohgrt>>>');
     this.g = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
-    console.log(this.g, 'this.g>>>');
   }
 
   private initAxis() {
@@ -55,10 +55,7 @@ export class BarChartComponent implements OnInit {
     this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(0.1);
     this.y = d3Scale.scaleLinear().rangeRound([this.height, 0]);
     this.x.domain(sortData.map((d) => d.time));
-    // this.x.domain(STATISTICS.map((d) => d.letter));
     this.y.domain([0, 100]);
-    // console.log(d3Array.max(STATISTICS, (d) => d.frequency), 'array max>>>>');
-
   }
 
   private drawAxis() {
@@ -78,23 +75,6 @@ export class BarChartComponent implements OnInit {
       .text('Percentage');
   }
 
-  // private getChartClass() {
-  //   // console.log('chart color called>>>');
-  //   // this.data.forEach((d) => {
-  //   //   if(d.per >= '70') {
-  //   //     this.g.selectAll('.bar').enter().append('rect').attr('class', 'dynamic-bar');
-  //   //   }
-  //   // })
-  //   this.g.selectAll('.bar')
-  //         .data(this.data)
-  //         .enter().append('rect')
-  //         .attr('class', (d) => (d.per >= '70') ? 'dynamic-bar': 'bar')
-  //         .attr('x', (d) => this.x(d.time))
-  //         .attr('y', (d) => this.y(d.per))
-  //         .attr('width', this.x.bandwidth())
-  //         .attr('height', (d) => this.height - this.y(d.per))
-  // }
-
   private drawBars() {
     this.g.selectAll('.bar')
       .data(this.data)
@@ -104,6 +84,5 @@ export class BarChartComponent implements OnInit {
       .attr('y', (d) => this.y(d.per))
       .attr('width', this.x.bandwidth())
       .attr('height', (d) => this.height - this.y(d.per));
-    // .style('fill', this.getChartColor());
   }
 }

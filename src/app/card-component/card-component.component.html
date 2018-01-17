@@ -3,21 +3,21 @@
     <div class="card-body">
       <h5 class="card-title">Bandwidth</h5>
       <p class="card-subtitle text-muted">Last Updated 24h ago</p>
-      <app-bar-chart [chartData]='bandwidthData'></app-bar-chart>
+      <app-bar-chart [chartData]='bandwidthData' [ngClass]=svgClass[0]></app-bar-chart>
     </div>
   </div>
   <div class="card main-card">
     <div class="card-body">
       <h5 class="card-title">CPU Usage</h5>
       <p class="card-subtitle text-muted">Last Updated 24h ago</p>
-      <app-bar-chart [chartData]='cpuData'></app-bar-chart>
+      <app-bar-chart [chartData]='cpuData' [ngClass]=svgClass[1]></app-bar-chart>
     </div>
   </div>
   <div class="card main-card">
     <div class="card-body">
       <h5 class="card-title">Memory Usage</h5>
       <p class="card-subtitle text-muted">Last Updated 24h ago</p>
-      <app-bar-chart [chartData]='memoryData'></app-bar-chart>
+      <app-bar-chart [chartData]='memoryData' [ngClass]=svgClass[2]></app-bar-chart>
     </div>
   </div>
 </div>
