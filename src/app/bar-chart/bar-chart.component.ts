@@ -1,10 +1,9 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Chart } from '../chart';
 
-import * as d3 from 'd3-selection';
-import * as d3Scale from 'd3-scale';
-import * as d3Array from 'd3-array';
-import * as d3Axis from 'd3-axis';
+import { select } from 'd3-selection';
+import { scaleBand, scaleLinear } from 'd3-scale';
+import { axisBottom, axisLeft } from 'd3-axis';
 
 @Component({
   selector: 'app-bar-chart',
@@ -40,7 +39,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
 
   private initSvg() {
     const svgClass = 'svg.' + this.ngClass;
-    this.svg = d3.select(svgClass);
+    this.svg = select(svgClass);
     this.width = +this.svg.attr('width') - this.margin.left - this.margin.right;
     this.height = +this.svg.attr('height') - this.margin.top - this.margin.bottom;
     this.g = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
@@ -52,8 +51,8 @@ export class BarChartComponent implements OnInit, AfterViewInit {
         return a.time - b.time;
       }
     });
-    this.x = d3Scale.scaleBand().rangeRound([0, this.width]).padding(0.1);
-    this.y = d3Scale.scaleLinear().rangeRound([this.height, 0]);
+    this.x = scaleBand().rangeRound([0, this.width]).padding(0.1);
+    this.y = scaleLinear().rangeRound([this.height, 0]);
     this.x.domain(sortData.map((d) => d.time));
     this.y.domain([0, 100]);
   }
@@ -62,10 +61,10 @@ export class BarChartComponent implements OnInit, AfterViewInit {
     this.g.append('g')
       .attr('class', 'axis axis--x')
       .attr('transform', 'translate(0,' + this.height + ')')
-      .call(d3Axis.axisBottom(this.x));
+      .call(axisBottom(this.x));
     this.g.append('g')
       .attr('class', 'axis axis--y')
-      .call(d3Axis.axisLeft(this.y).ticks(3))
+      .call(axisLeft(this.y).ticks(3))
       .append('text')
       .attr('class', 'axis-title')
       .attr('transform', 'rotate(-90)')
